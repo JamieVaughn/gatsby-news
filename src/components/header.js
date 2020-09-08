@@ -9,6 +9,7 @@ const Header = ({ siteTitle }) => (
       marginBottom: `1.45rem`,
     }}
   >
+    <img src="../src/images/graph.png" alt="logo" />
     <div
       style={{
         margin: `0 auto`,
