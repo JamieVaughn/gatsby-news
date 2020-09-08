@@ -1,36 +1,51 @@
-import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React from "react"
+import React, {useState} from "react"
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink
+} from 'reactstrap';
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <img src="../src/images/graph.png" alt="logo" />
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
+const Header = ({ siteTitle }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
+  return (
+    <Navbar color="light" fixed='top' expand="sm">
+      <div className='container'>
+        <NavbarBrand href="/">
+          <img src='/images/graph.png' alt='📊 ' />
           {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+        </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink href="/team">Team</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/about">About Us</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/tags">Tags</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/podcasts">Podcasts</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/library">Reference Library</NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </div>
+    </Navbar>
+  );
+  }
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
