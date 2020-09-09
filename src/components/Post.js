@@ -1,12 +1,12 @@
 import React from 'react'
 import {Link} from 'gatsby'
-import {Card, CardBody, CardTitle, CardSubtitle, CardText} from 'reactstrap'
+import {Card, CardBody, CardTitle, CardSubtitle, CardText, Badge} from 'reactstrap'
 import Img from 'gatsby-image'
-
+import { slugify } from '../utils/utils'
 
 const Post = (props) => {
     console.log(props)
-    const {title, author, path, date, image} = props.node.frontmatter
+    const {title, author, path, date, image, tags} = props.node.frontmatter
     const excerpt = props.node.excerpt
     const fluid = image.childImageSharp.fluid
     return (
@@ -25,6 +25,15 @@ const Post = (props) => {
                 <CardText>
                     {excerpt}
                 </CardText>
+                <ul className='post-tags'>
+                    {tags.map( (tag, index) => (
+                        <li key={index}>
+                            <Link to={`/tag/${slugify(tag)}`}>
+                                <Badge color='primary' className='text-uppercase'>{tag}</Badge>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
                 <Link to={path} className='btn btn-outline-primary float-right'>Read More</Link>
             </CardBody>
         </Card>

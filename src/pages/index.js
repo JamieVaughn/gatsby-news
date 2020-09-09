@@ -18,6 +18,7 @@ const IndexQuery = graphql`
             date(formatString: "MM DD YYYY")
             author
             path
+            tags
             image {
               childImageSharp {
                 fluid(maxWidth: 600) {
