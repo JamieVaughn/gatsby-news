@@ -5,7 +5,6 @@ import Img from 'gatsby-image'
 import { slugify } from '../utils/utils'
 
 const Post = (props) => {
-    console.log(props)
     const {title, author, path, date, image, tags} = props.node.frontmatter
     const excerpt = props.node.excerpt
     const fluid = image.childImageSharp.fluid

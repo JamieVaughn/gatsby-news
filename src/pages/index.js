@@ -4,7 +4,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import {graphql, StaticQuery} from 'gatsby'
 import Post from '../components/Post'
-import { node } from "prop-types"
+import Sidebar from '../components/Sidebar'
 import { Row, Col} from 'reactstrap'
 
 const IndexQuery = graphql`
@@ -13,7 +13,7 @@ const IndexQuery = graphql`
       edges {
         node {
           id 
-          frontmatter{
+          frontmatter {
             title
             date(formatString: "MM DD YYYY")
             author
@@ -50,8 +50,8 @@ const IndexPage = () => (
         )
       }} />
       </Col>
-      <Col md="3" style={{background: '#ddd'}}>
-        Sidebar
+      <Col md="3">
+        <Sidebar />
       </Col>
     </Row>
   </Layout>
