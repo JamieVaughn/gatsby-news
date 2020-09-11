@@ -3,7 +3,7 @@ import { Card, CardTitle, CardBody, FormGroup, Input } from 'reactstrap'
 import { graphql, Link, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 
-const sidebarQuery = graphql`
+export const sidebarQuery = graphql`
   query {
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC}, limit: 3) {
       edges {
@@ -11,7 +11,6 @@ const sidebarQuery = graphql`
           id 
           frontmatter {
             title
-            path
             image {
               childImageSharp {
                 fluid(maxWidth: 300) {
@@ -20,13 +19,16 @@ const sidebarQuery = graphql`
               }
             }
           }
+          fields {
+              slug
+          }
         }
       }
     }
   }
 `
 
-const Sidebar = props => {
+const Sidebar = () => {
 
     return (
         <div>
@@ -58,12 +60,12 @@ const Sidebar = props => {
                         data.allMarkdownRemark.edges.map(node => {
                             return (
                                 <Card key={node.node.id}>
-                                    <Link to={node.node.frontmatter.path}>
+                                    <Link to={`/${node.node.fields.slug}`}>
                                         <Img className='card-image-top' alt="post thumbnail" fluid={node.node.frontmatter.image.childImageSharp.fluid}/>
                                     </Link>
                                     <CardBody>
                                         <CardTitle>
-                                            <Link to={node.node.frontmatter.path}>{node.node.frontmatter.title}</Link>
+                                            <Link to={`/${node.node.fields.slug}`}>{node.node.frontmatter.title}</Link>
                                         </CardTitle>
                                     </CardBody>
                                 </Card>

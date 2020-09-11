@@ -35,7 +35,7 @@ const Header = ({ siteTitle }) => {
               <NavLink href="/tags">Tags</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/podcasts">Podcasts</NavLink>
+              <NavLink href="/graphs">Graphs</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/library">Reference Library</NavLink>

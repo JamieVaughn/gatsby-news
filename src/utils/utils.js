@@ -8,6 +8,6 @@ const slugify = text => (
     .replace(/-+$/g, '-') // trim - from end
 )
 
-export {
+module.exports =  {
     slugify
 }
