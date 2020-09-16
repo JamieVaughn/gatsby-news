@@ -6,11 +6,23 @@ import SEO from '../components/seo'
 import Img from 'gatsby-image'
 import { slugify } from '../utils/utils'
 import authors from '../utils/authors'
+import { DiscussionEmbed } from 'disqus-react'
+import GitHubButton from 'react-github-btn'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+library.add(fab)
 
 const details = ({data, pageContext}) => {
     console.log(data, pageContext)
     const post = data.markdownRemark.frontmatter
     const author = authors.find(a => a.name === post.author)
+    const baseUrl = `https://graphicules.com/`
+    const disqusConfig = {
+        identifier: 'graphicules' + data.markdownRemark.id,
+        title: post.title,
+        url: baseUrl + pageContext.slug
+    }
     return (
         <Layout pageTitle={post.title} postAuthor={author} authorImage={data.file.childImageSharp.fluid}>
             <SEO title={post.title} />
@@ -33,6 +45,30 @@ const details = ({data, pageContext}) => {
                     </ul>
                 </CardBody>
             </Card>
+            <h3 className="text-center">Share this post</h3>
+            <div className="text-center social-share-links">
+                <ul>
+                    <li>
+                        <a href={`https://wwww.facebook.com/sharer/sharer.php?u=${baseUrl}${pageContext.slug}`} className="facebook" target="_blank" rel="noopener noreferrer">
+                            <FontAwesomeIcon icon={['fab', 'facebook']} className="display-4"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`https://twitter.com/share?url=${baseUrl}${pageContext.slug}&text=${post.title}&via=${author.twitter}`} target='_blank' rel='noopener noreferrer' className="twitter">
+                            <FontAwesomeIcon icon={['fab', 'twitter']} className="display-4"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`https://www.linkedin.com/shareArticle?url=${baseUrl}${pageContext.slug}`} target='_blank' rel='noopener noreferrer' className="linkedin">
+                            <FontAwesomeIcon icon={['fab', 'linkedin']} className="display-4"/>
+                        </a>
+                    </li>
+                    <li>
+                        <GitHubButton href="https://github.com/JamieVaughn/gatsby-news" data-size="large" data-show-count="true" aria-label="Star JamieVaughn/gatsby-news on GitHub">Star</GitHubButton>
+                    </li>
+                </ul>
+            </div>
+            <DiscussionEmbed shortname={'graphicules'} config={disqusConfig} />
         </Layout>
     )
 }

@@ -11,6 +11,7 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
