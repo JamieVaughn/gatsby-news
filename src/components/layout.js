@@ -15,7 +15,7 @@ import Sidebar from './Sidebar'
 import Footer from './Footer'
 import '../styles/index.scss'
 
-const Layout = ({ children, pageTitle}) => {
+const Layout = ({ authorImage, children, pageTitle, postAuthor}) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -39,7 +39,7 @@ const Layout = ({ children, pageTitle}) => {
             {children}
           </Col>
           <Col md="3">
-            <Sidebar />
+            <Sidebar author={postAuthor} authorImage={authorImage}/>
           </Col>
         </Row>
       </div>

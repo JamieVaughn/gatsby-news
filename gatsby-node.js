@@ -5,6 +5,8 @@
  */
 
 const {slugify} = require('./src/utils/utils')
+const path = require('path')
+const authors = require('./src/utils/authors.js')
 
 exports.onCreateNode = ({node, actions}) => {
     const { createNodeField } = actions
@@ -20,16 +22,14 @@ exports.onCreateNode = ({node, actions}) => {
 
 exports.createPages = ({ actions, graphql }) => {
     const { createPage } = actions
-    const detailsTemplate = require.resolve('./src/templates/details.js')
+    const detailsTemplate = path.resolve('src/templates/details.js')
     return graphql(`
         {
             allMarkdownRemark {
                 edges {
                     node {
                         frontmatter {
-                            title
                             author
-                            tags
                         }
                         fields {
                             slug
@@ -47,9 +47,12 @@ exports.createPages = ({ actions, graphql }) => {
             createPage({
                 path: node.fields.slug,
                 component: detailsTemplate,
-                content: {
+                context: {
+                    error: res.errors,
                     //Pass in slug for template to use to get post
-                    slug: node.fields.slug
+                    slug: node.fields.slug,
+                    // find author image url from authors.js and pass it to details component
+                    imageUrl: authors.find(a => a.name === node.frontmatter.author).imageUrl
                 }
             })
         })

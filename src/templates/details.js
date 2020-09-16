@@ -5,12 +5,14 @@ import { graphql, Link } from 'gatsby'
 import SEO from '../components/seo'
 import Img from 'gatsby-image'
 import { slugify } from '../utils/utils'
+import authors from '../utils/authors'
 
-const details = ({data}) => {
-    console.log(data)
+const details = ({data, pageContext}) => {
+    console.log(data, pageContext)
     const post = data.markdownRemark.frontmatter
+    const author = authors.find(a => a.name === post.author)
     return (
-        <Layout pageTitle={post.title}>
+        <Layout pageTitle={post.title} postAuthor={author} authorImage={data.file.childImageSharp.fluid}>
             <SEO title={post.title} />
             <Card>
                 <Img className='card-image-top' fluid={post.image.childImageSharp.fluid} />
@@ -36,7 +38,7 @@ const details = ({data}) => {
 }
 
 export const detailsQuery = graphql`
-    query blogPostBySlug($slug: String) {
+    query blogPostBySlug($slug: String, $imageUrl: String) {
         markdownRemark(fields: {slug: { eq: $slug } }) {
             id
             html
@@ -56,6 +58,13 @@ export const detailsQuery = graphql`
             fields {
                 slug
             }
+        }
+        file(relativePath: { eq: $imageUrl}) {
+            childImageSharp {
+                    fluid(maxWidth: 300) {
+                        ...GatsbyImageSharpFluid
+                    }
+                }
         }
     }
 `
