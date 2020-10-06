@@ -8,6 +8,7 @@ const {slugify} = require('./src/utils/utils')
 const path = require('path')
 const authors = require('./src/utils/authors.js')
 const _ = require('lodash')
+const { template } = require('lodash')
 
 exports.onCreateNode = ({node, actions}) => {
     const { createNodeField } = actions
@@ -27,7 +28,8 @@ exports.createPages = ({ actions, graphql }) => {
         details: path.resolve('src/templates/details.js'),
         tags: path.resolve('src/templates/tags.js'),
         tagPosts: path.resolve('src/templates/tagPost.js'),
-        postList: path.resolve('src/templates/postList.js')
+        postList: path.resolve('src/templates/postList.js'),
+        authorDetail: path.resolve('src/templates/authorDetail.js'),
     }
     return graphql(`
         {
@@ -115,6 +117,17 @@ exports.createPages = ({ actions, graphql }) => {
                     numberOfPages
                 }
             })
+       })
+
+       authors.forEach(author => {
+           createPage({
+               path: `/author/${slugify(author.name)}`,
+               component: templates.authorDetail,
+               context: {
+                   authorName: author.name,
+                   imageUrl: author.imageUrl
+               }
+           })
        })
     })
 }
