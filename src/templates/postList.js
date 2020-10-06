@@ -1,17 +1,19 @@
 import React from 'react'
 import Layout from '../components/layout'
 import Post from '../components/Post'
+import PaginationBar from '../components/paginationbar'
 import { graphql } from 'gatsby'
 
 const postList = (props) => {
     const posts = props.data.allMarkdownRemark.edges
-    const { currentPage } = props.pageContext
+    const { currentPage, numberOfPages } = props.pageContext
 
     return (
         <Layout pageTitle={`Page: ${currentPage}`}>
             {posts.map(data => (
                 <Post key={data.node.id} node={data.node} slug={data.node.fields.slug} />
             ))}
+            <PaginationBar currentPage={currentPage} pageTotal={numberOfPages} />
         </Layout>
     )
 }
